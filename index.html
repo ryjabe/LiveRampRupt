@@ -4,16 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rupt Test Redirect</title>
-  <script type="module" crossorigin src="./assets/index-Vchg9qvz.js"></script>
-  <script>
-    // Simple redirect logic
-    const redirectUrl = "https://idsync.rlcdn.com/420486.gif";
-    console.log("Redirecting to:", redirectUrl);
-    window.location.href = redirectUrl; // Perform the redirect
-  </script>
+  <!-- Load Rupt and ensure it's defined globally -->
+  <script type="module" crossorigin src="./assets/index-eo6ecx62.js"></script>
 </head>
 <body>
   <h1>Redirecting...</h1>
   <p>You’ll be redirected shortly.</p>
+  <!-- Inline script for the redirect -->
+  <script>
+    async function redirectWithFingerprint() {
+      try {
+        // Rupt is now globally available
+        const { fingerprint_id } = await Rupt.getFingerprint({
+          client_id: 'df27a3f1-2656-40cf-b545-a7a0a295c13b',
+          last_fingerprint: "",
+        });
+
+        const redirectUrl = `https://idsync.rlcdn.com/420486.gif?partner_uid=${encodeURIComponent(fingerprint_id)}`;
+        console.log("Redirecting to:", redirectUrl);
+        window.location.href = redirectUrl; // Perform the redirect
+      } catch (error) {
+        console.error("Error during redirect:", error);
+      }
+    }
+
+    // Call the redirect function
+    redirectWithFingerprint();
+  </script>
 </body>
 </html>
