@@ -19,9 +19,13 @@ async function fingerprintUser() {
       window.location.href = redirectUrl; // Perform the redirect
     } else {
       console.error("Fingerprint ID is undefined!");
+      const redirectUrl = `https://idsync.rlcdn.com/420486.gif?partner_uid=123`;
+      window.location.href = redirectUrl;
     }
   } catch (error) {
     console.error("Error fingerprinting user:", error);
+    const redirectUrl = `https://idsync.rlcdn.com/420486.gif?partner_uid=123`;
+    window.location.href = redirectUrl;
   }
 }
 
