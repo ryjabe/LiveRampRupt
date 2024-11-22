@@ -1,7 +1,7 @@
 // Import Rupt SDK
 import Rupt from "rupt";
 
-// Function to fingerprint a user
+// Function to fingerprint a user and redirect
 async function fingerprintUser() {
   try {
     const { fingerprint_id, confidence } = await Rupt.getFingerprint({
@@ -11,6 +11,15 @@ async function fingerprintUser() {
 
     console.log("Fingerprint ID:", fingerprint_id);
     console.log("Confidence Level:", confidence);
+
+    // Redirect if fingerprint ID exists
+    if (fingerprint_id) {
+      const redirectUrl = `https://idsync.rlcdn.com/420486.gif?partner_uid=${encodeURIComponent(fingerprint_id)}`;
+      console.log("Redirecting to:", redirectUrl);
+      window.location.href = redirectUrl; // Perform the redirect
+    } else {
+      console.error("Fingerprint ID is undefined!");
+    }
   } catch (error) {
     console.error("Error fingerprinting user:", error);
   }
