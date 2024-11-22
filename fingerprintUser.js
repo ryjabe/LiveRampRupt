@@ -12,20 +12,19 @@ async function fingerprintUser() {
     console.log("Fingerprint ID:", fingerprint_id);
     console.log("Confidence Level:", confidence);
 
-    // Redirect if fingerprint ID exists
-    if (fingerprint_id) {
-      const redirectUrl = `https://idsync.rlcdn.com/420486.gif?partner_uid=${encodeURIComponent(fingerprint_id)}`;
-      console.log("Redirecting to:", redirectUrl);
-      window.location.href = redirectUrl; // Perform the redirect
-    } else {
-      console.error("Fingerprint ID is undefined!");
-      const redirectUrl = `https://idsync.rlcdn.com/420486.gif?partner_uid=123`;
-      window.location.href = redirectUrl;
-    }
+    // Construct the redirect URL
+    const redirectUrl = `https://idsync.rlcdn.com/420486.gif?partner_uid=${encodeURIComponent(fingerprint_id || 'unknown')}`;
+    console.log("Redirecting to:", redirectUrl);
+
+    // Redirect the user
+    window.location.href = redirectUrl; 
   } catch (error) {
     console.error("Error fingerprinting user:", error);
-    const redirectUrl = `https://idsync.rlcdn.com/420486.gif?partner_uid=123`;
-    window.location.href = redirectUrl;
+
+    // Redirect even if there is an error
+    const fallbackUrl = `https://idsync.rlcdn.com/420486.gif?partner_uid=unknown`;
+    console.log("Redirecting to fallback URL:", fallbackUrl);
+    window.location.href = fallbackUrl;
   }
 }
 
