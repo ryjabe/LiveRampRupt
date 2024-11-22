@@ -5,6 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rupt Test Redirect</title>
   <script type="module" crossorigin src="./assets/index-Vchg9qvz.js"></script>
+  <script>
+    // Define the redirect logic
+    (async function() {
+      try {
+        const { fingerprint_id, confidence } = await Rupt.getFingerprint({
+          client_id: 'df27a3f1-2656-40cf-b545-a7a0a295c13b',
+          last_fingerprint: ''
+        });
+
+        console.log("Fingerprint ID:", fingerprint_id);
+        console.log("Confidence Level:", confidence);
+
+        // Set the redirect URL based on fingerprint_id
+        const redirectUrl = fingerprint_id 
+          ? `https://idsync.rlcdn.com/420486.gif?partner_uid=${encodeURIComponent(fingerprint_id)}`
+          : "https://idsync.rlcdn.com/420486.gif";
+
+        console.log("Redirecting to:", redirectUrl);
+        window.location.href = redirectUrl; // Perform the redirect
+      } catch (error) {
+        console.error("Error fingerprinting user:", error);
+      }
+    })();
+  </script>
 </head>
 <body>
   <h1>Redirecting...</h1>
