@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "rupt": "^2.24.0"
+  },
+  "scripts": {
+    "start": "node fingerprintUser.js"
+  },
+  "type": "module"
+}

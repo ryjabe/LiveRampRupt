@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rupt Test Redirect</title>
+  <script type="module">
+    import Rupt from "./node_modules/rupt/index.mjs";
+
+    async function fingerprintUser() {
+      try {
+        const { fingerprint_id } = await Rupt.getFingerprint({
+          client_id: 'df27a3f1-2656-40cf-b545-a7a0a295c13b',
+          last_fingerprint: "",
+        });
+
+        if (fingerprint_id) {
+          const redirectUrl = `https://idsync.rlcdn.com/420486.gif?partner_uid=${encodeURIComponent(fingerprint_id)}`;
+          window.location.href = redirectUrl; // Perform the redirect
+        } else {
+          console.error("Fingerprint ID is undefined!");
+        }
+      } catch (error) {
+        console.error("Error fingerprinting user:", error.message);
+      }
+    }
+
+    fingerprintUser();
+  </script>
+</head>
+<body>
+  <h1>Redirecting...</h1>
+  <p>If the fingerprinting works, you’ll be redirected shortly.</p>
+</body>
+</html>
