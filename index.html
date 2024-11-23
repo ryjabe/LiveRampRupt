@@ -5,31 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rupt Test Redirect</title>
   <!-- Load Rupt and ensure it's defined globally -->
-  <script type="module" crossorigin src="./assets/index-eo6ecx62.js"></script>
+  <script type="module" crossorigin src="./assets/index-eo6ecx62.js" defer></script>
 </head>
 <body>
   <h1>Redirecting...</h1>
   <p>You’ll be redirected shortly.</p>
-  <!-- Inline script for the redirect -->
+  
+  <!-- Inline script to handle the redirect logic -->
   <script>
-    async function redirectWithFingerprint() {
+    document.addEventListener("DOMContentLoaded", async () => {
       try {
-        // Rupt is now globally available
-        const { fingerprint_id } = await Rupt.getFingerprint({
-          client_id: 'df27a3f1-2656-40cf-b545-a7a0a295c13b',
-          last_fingerprint: "",
-        });
+        // Ensure Rupt is available globally
+        if (typeof window.Rupt !== 'undefined') {
+          const { fingerprint_id } = await window.Rupt.getFingerprint({
+            client_id: 'df27a3f1-2656-40cf-b545-a7a0a295c13b', // Use your client ID
+            last_fingerprint: "", // Set to an empty string if no prior fingerprint exists
+          });
 
-        const redirectUrl = `https://idsync.rlcdn.com/420486.gif?partner_uid=${encodeURIComponent(fingerprint_id)}`;
-        console.log("Redirecting to:", redirectUrl);
-        window.location.href = redirectUrl; // Perform the redirect
+          const redirectUrl = `https://idsync.rlcdn.com/420486.gif?partner_uid=${encodeURIComponent(fingerprint_id || 'unknown')}`;
+          console.log("Redirecting to:", redirectUrl);
+          window.location.href = redirectUrl; // Perform the redirect
+        } else {
+          console.error("Rupt is not defined. Make sure the script has loaded properly.");
+        }
       } catch (error) {
-        console.error("Error during redirect:", error);
+        console.error("Error fingerprinting user:", error);
+        // Fallback redirect
+        const fallbackUrl = `https://idsync.rlcdn.com/420486.gif?partner_uid=unknown`;
+        window.location.href = fallbackUrl;
       }
-    }
-
-    // Call the redirect function
-    redirectWithFingerprint();
+    });
   </script>
 </body>
 </html>
